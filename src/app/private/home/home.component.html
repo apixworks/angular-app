@@ -1,0 +1,6 @@
+<ul *ngIf="employees">
+  <li *ngFor="let employee of employees">
+    Name: <b>{{ employee.name }}</b> &nbsp; &nbsp; Username: <b>{{ employee.position }}</b>
+    <button class="btn btn-sm btn-danger button-container pull-right" (click)="onClickDeleteUser(employee.id)">Delete</button>
+  </li>
+</ul>
