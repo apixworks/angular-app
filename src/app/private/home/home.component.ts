@@ -10,8 +10,14 @@ import {Observable} from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
-    employees: Object;
-    private usersObservable: Observable<any[]>;
+    employees: Object[];
+    private id = '';
+    private name = '';
+    private mobile = '';
+    private password = '';
+    private position = '';
+    private alertEdit = false;
+    private alertMessage = '';
 
     constructor(private httpService: HttpService) {
     }
@@ -43,6 +49,34 @@ export class HomeComponent implements OnInit {
             this.employees = [];
             this.getUsersFromService();
         });
+        this.alertMessage = 'Deleted';
+        this.alertEdit = true;
+    }
+
+    addEditEmployee(id) {
+        for (let i = 0; i < this.employees.length; i++) {
+            if (this.employees[i]['id'] === id) {
+                this.id = this.employees[i]['id'];
+                this.name = this.employees[i]['name'];
+                this.mobile = this.employees[i]['mobile'];
+                this.password = this.employees[i]['password'];
+                this.position = this.employees[i]['position'];
+            }
+        }
+    }
+    editEmployee() {
+        const employee = {
+            'id': this.id,
+            'name': this.name,
+            'mobile': this.mobile,
+            'password': this.password,
+            'position': this.position
+        };
+        this.httpService.editEmployee(employee).subscribe(response => {
+            console.log(response);
+        });
+        this.alertMessage = 'Edited';
+        this.alertEdit = true;
     }
 
 }
